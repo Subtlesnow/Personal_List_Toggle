@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import data from '../data/data';
 
-class ContactInfo extends React.Component {
+class ContactInfo extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			show: false
 		}
+		this.toggleContact = this.toggleContact.bind(this)
 	}
 	toggleContact = () => {
 		this.setState({
@@ -18,7 +19,7 @@ class ContactInfo extends React.Component {
 		const {item} = this.props
 		return (
 			<ul>
-				<li key={item.id} onClick={ () => this.toggleContact()}>
+				<li key={item.id} onClick={() => this.toggleContact()}>
 				{item.first} {item.last} 	
 				
 				{
@@ -35,18 +36,34 @@ class ContactInfo extends React.Component {
 }
 
 
-class ToggleList extends React.Component {
+class ToggleList extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			data
+			data,
+			isLoading: true
 		}
 	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			this.setState(prevState => ({
+				isLoading: false
+			}))
+		},2000)
+	}
+
 	render() {
+ 
+		if(this.state.isLoading) {
+			return(
+				<div>Is Loading</div>
+			)
+		}
 		const { data } = this.state
 		return(
 			<div>
-			{data.map(item => (<ContactInfo item={item} key={item.id}/>))}
+				{data.map(item => (<ContactInfo item={item} key={item.id}/>))}
 			</div>
 		)
 	}
