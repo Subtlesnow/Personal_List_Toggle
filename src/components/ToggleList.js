@@ -17,15 +17,22 @@ class ContactInfo extends React.Component {
 	render() {
 		const {item} = this.props
 		return (
-			<li>
-				<span key={item.id} onClick={ () => this.toggleContact()}>
-				{item.first} {item.last}
-				</span>
-			</li>
-		)
+			<ul>
+				<li key={item.id} onClick={ () => this.toggleContact()}>
+				{item.first} {item.last} 	
+				
+				{
+					this.state.show &&
+					<div>
+					<div>Age: {item.age}</div>
+					<div>State: {item.state}</div>
+					<div>Email: {item.email}</div>
+					</div>
+				}
+				</li>
+			</ul>)
 	}
 }
-
 
 
 class ToggleList extends React.Component {
@@ -38,9 +45,9 @@ class ToggleList extends React.Component {
 	render() {
 		const { data } = this.state
 		return(
-			<ul>
+			<div>
 			{data.map(item => (<ContactInfo item={item} key={item.id}/>))}
-			</ul>
+			</div>
 		)
 	}
 }
